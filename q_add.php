@@ -17,6 +17,7 @@
         $A5=$_POST['A5'];
         $A6=$_POST['A6'];
         $A7=$_POST['A7'];
+        $img=$_POST['img'];
         $check_0 = isset($_POST['ch'][0]) ? 1 : 0;
         $check_1 = isset($_POST['ch'][1]) ? 1 : 0;
         $check_2 = isset($_POST['ch'][2]) ? 1 : 0; 
@@ -24,12 +25,14 @@
         $check_4 = isset($_POST['ch'][4]) ? 1 : 0; 
         $check_5 = isset($_POST['ch'][5]) ? 1 : 0; 
         $check_6 = isset($_POST['ch'][6]) ? 1 : 0;   
+        $img = isset($_POST['img'][0]) ? 1 : 0;   
         $no_Correct=$check_0+$check_1+$check_2+$check_3+$check_4+$check_5+$check_6 ;
         if($no_Correct>1){$q_type=2;}else{$q_type=1;}
         $note=$_POST['note'];   
         if (empty($_POST['Q1'])){exit(1);}
         if (empty($_POST['A1'])){exit(1);}
-        $sql_q=$conn ->query("INSERT INTO question (q_q,  q_book , q_note,q_type) VALUES ( '$Q1', 'CISCO 200-125','$note','$q_type')");  
+        $sql_q=$conn ->query("INSERT INTO question (q_q,  q_book , q_note,q_type,q_img) VALUES 
+                                        ('$Q1', 'CISCO 200-125','$note','$q_type','$img')");  
         $row=mysqli_fetch_array($conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1"));
         $MaxID= $row['q_id']; 
         $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A1', '$check_0')");
@@ -71,6 +74,12 @@
                                                 <span class="m-section__sub"> 
                                                     <div class="form-group m-form__group row"> 
                                                             <textarea   class="form-control"  name="Q1" id="Q1" placeholder="" rows="6"></textarea> 
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="m-checkbox m-checkbox--solid m-checkbox--success">
+                                                                <input type="checkbox"  id="img" name="img" value="1" >With Image
+                                                                <span></span>
+                                                            </label> 
                                                     </div> 
                                                 </span>   
                                             </div> 
