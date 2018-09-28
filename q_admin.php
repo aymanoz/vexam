@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"> 
 	<!-- begin::Head -->
-	<?php include "txt/head.php"?> 
+	<?php include "txt/head.php";?> 
 	<!-- end::Head -->
 
 
 	<!-- begin::PHP Add  -->
     <?php 
-        $conn  = new mysqli("localhost", "root","", "db_vexam");
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        } 
+        
+	    include "txt/db.php";
         if (!empty($_POST['submit'])) { 
             $check_0 = isset($_POST['ch'][0]) ? 1 : 0;
             $check_1 = isset($_POST['ch'][1]) ? 1 : 0; 

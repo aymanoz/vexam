@@ -25,16 +25,22 @@
         $check_5 = isset($_POST['ch'][5]) ? 1 : 0; 
         $check_6 = isset($_POST['ch'][6]) ? 1 : 0;   
         $note=$_POST['note'];   
+        if (empty($_POST['Q1'])){exit(1);}
+        if (empty($_POST['A1'])){exit(1);}
         $sql_q=$conn ->query("INSERT INTO question (q_q,  q_book , q_note) VALUES ( '$Q1', 'CISCO 200-125','$note')");  
         $row=mysqli_fetch_array($conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1"));
         $MaxID= $row['q_id']; 
-        $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A1', '$check_0'),
-                                                                                    ($MaxID, '$A2', '$check_1'),
-                                                                                    ($MaxID, '$A3', '$check_2'),
-                                                                                    ($MaxID, '$A4', '$check_3'),
-                                                                                    ($MaxID, '$A5', '$check_4'),
-                                                                                    ($MaxID, '$A6', '$check_5'),
-                                                                                    ($MaxID, '$A7', '$check_6')"); 
+        $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A1', '$check_0')");
+        if (!empty($_POST['A2'])){$sql_u2=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A2', '$check_1')");}
+        if (!empty($_POST['A3'])){$sql_u3=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A3', '$check_2')");}
+        if (!empty($_POST['A4'])){$sql_u4=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A4', '$check_3')");}
+        if (!empty($_POST['A5'])){$sql_u5=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A5', '$check_4')");}
+        if (!empty($_POST['A6'])){$sql_u6=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A6', '$check_5')");}
+        if (!empty($_POST['A7'])){$sql_u7=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A7', '$check_6')");}
+         
+
+
+ 
         mysqli_close($conn); 
         $Note ="New question created successfully";
   } ?>
