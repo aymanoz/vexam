@@ -13,6 +13,7 @@
 	$q_no=$_SESSION["q_no"];
 	echo $q_no;
 	$result = $conn->query("SELECT * FROM question WHERE q_id LIKE '$q_no'");
+	$num_rows=$result->num_rows;
 	if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	}
@@ -44,64 +45,42 @@
 										<!--end::Section--> 
 										<!--begin::Section-->
 										<div class="m-section"> 
-											<span class="m-section__sub">
-												
+											<span class="m-section__sub"> 										
+												<?php	
+												$q_nox=$row['q_id']; 
+												$q_type=$row['q_type']; 
+												$result_a = $conn->query("SELECT * FROM answer WHERE a_qid LIKE $q_nox");
+												if ($result_a->num_rows > 0) {
+													// output data of each row 
+													if($q_type==1){
+												?> 
 															<div class="m-form__group form-group">
 																<label>Chose One</label>
 																<div class="m-radio-list">
-																 
+																 <?php  while($row_a = $result_a->fetch_assoc()) { ?> 
 																	<label class="m-radio m-radio--solid m-radio--success">
-																		<input type="radio" name="example_5" value="5"> It continues operating normally.
+																		<input type="radio" name="example_5" value="5"><?php  echo   $row_a["a_a"] ; ?>
 																		<span></span>
-																	</label> 
-																	<label class="m-radio m-radio--solid m-radio--success">
-																		<input type="radio" name="example_5" value="5"> It goes into a down/down state.
-																		<span></span>
-																	</label> 
-																	<label class="m-radio m-radio--solid m-radio--success">
-																		<input type="radio" name="example_5" value="5"> It becomes the root bridge for the configured VLAN
-																		<span></span>
-																	</label> 
-																	<label class="m-radio m-radio--solid m-radio--success">
-																		<input type="radio" name="example_5" value="5">It goes into an errdisable state.
-																		<span></span>
-																	</label> 
-																	 
+																	</label>  
+																		<?php }   ?>	
 																</div>
-															</div> 
-														<?php /*
-
+															</div>  
+												<?php }  
+													if($q_type==2){
+												?>
 															<div class="m-form__group form-group">
 																<label>Chose three</label>
 																<div class="m-checkbox-list"> 
+																<?php  while($row_a = $result_a->fetch_assoc()) { ?> 
 																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
+																		<input type="checkbox"> <?php  echo   $row_a["a_a"] ; ?>
 																		<span></span>
 																	</label> 
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
-																		<span></span>
-																	</label> 
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
-																		<span></span>
-																	</label> 
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
-																		<span></span>
-																	</label> 
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
-																		<span></span>
-																	</label> 
-																	<label class="m-checkbox m-checkbox--solid m-checkbox--success">
-																		<input type="checkbox"> Success checked state
-																		<span></span>
-																	</label> 
+																	<?php }  ?>	
 																</div>
 															</div>
-															*/
-														?>
+												<?php }  }
+												?>		 
  
 
 											</span>
