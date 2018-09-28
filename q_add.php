@@ -24,10 +24,12 @@
         $check_4 = isset($_POST['ch'][4]) ? 1 : 0; 
         $check_5 = isset($_POST['ch'][5]) ? 1 : 0; 
         $check_6 = isset($_POST['ch'][6]) ? 1 : 0;   
+        $no_Correct=$check_0+$check_1+$check_2+$check_3+$check_4+$check_5+$check_6 ;
+        if($no_Correct>1){$q_type=2;}else{$q_type=1;}
         $note=$_POST['note'];   
         if (empty($_POST['Q1'])){exit(1);}
         if (empty($_POST['A1'])){exit(1);}
-        $sql_q=$conn ->query("INSERT INTO question (q_q,  q_book , q_note) VALUES ( '$Q1', 'CISCO 200-125','$note')");  
+        $sql_q=$conn ->query("INSERT INTO question (q_q,  q_book , q_note,q_type) VALUES ( '$Q1', 'CISCO 200-125','$note','$q_type')");  
         $row=mysqli_fetch_array($conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1"));
         $MaxID= $row['q_id']; 
         $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A1', '$check_0')");
