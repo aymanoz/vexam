@@ -37,10 +37,9 @@
         if (!empty($_POST['A5'])){$sql_u5=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A5', '$check_4')");}
         if (!empty($_POST['A6'])){$sql_u6=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A6', '$check_5')");}
         if (!empty($_POST['A7'])){$sql_u7=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A7', '$check_6')");}
-         
+        // Add log record
+        $sql_a=$conn ->query( "INSERT INTO log (log_book,log_type,log_data) VALUES  ('CISCO 200-125', 'Add', 'Add Qustion No. $MaxID')");
 
-
- 
         mysqli_close($conn); 
         $Note ="New question created successfully";
   } ?>
