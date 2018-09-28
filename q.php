@@ -4,20 +4,21 @@
 	<?php include "txt/head.php";
 	    // Create connection
 	session_start();
-    include "txt/db.php";
-	$_SESSION["q_no"]=$_SESSION["q_no"]+1;
+	include "txt/db.php";
+	if(!isset($_SESSION["q_no"])){$_SESSION["q_no"]=1;} 
+	if(isset($_GET["p"])){
+	if($_GET["p"]==0){$_SESSION["q_no"]=$_SESSION["q_no"]-1;} 
+	if($_GET["p"]==1){$_SESSION["q_no"]=$_SESSION["q_no"]+1;}  
+	}
 	$q_no=$_SESSION["q_no"];
-	$sql = "SELECT * FROM question WHERE q_id LIKE '$q_no'";
-	$result = $conn->query($sql);
+	echo $q_no;
+	$result = $conn->query("SELECT * FROM question WHERE q_id LIKE '$q_no'");
 	if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	}
 	?> 
-	<!-- end::Head -->
-
-	<!-- begin::Body -->
-	<body>
- 
+	<!-- end::Head --> 
+	<body> 
 			<!-- begin::Body -->    
 						<div class="row">
 							<div class="col-lg-12">
@@ -37,7 +38,7 @@
 										<!--begin::Section-->
 										<div class="m-section"> 
 											<span class="m-section__sub">
-											 <?php echo row['q_q'];?>
+											 <?php echo $row['q_q'];?>
 											</span> 
 										</div> 
 										<!--end::Section--> 
@@ -107,11 +108,11 @@
 											<div class="m-section__content m-demo-buttons">
 													<div class="row">
 														<div class="col-lg-6">
-															<button type="reset" class="btn btn-primary">Previous</button>
-															<button type="reset" class="btn btn-primary">Next</button>
+															<a href="q.php?p=0" class="btn btn-primary">Previous</a>
+															<a href="q.php?p=1" class="btn btn-primary">Next</a> 
 														</div>
 														<div class="col-lg-6 m--align-right">
-															<button type="reset" class="btn btn-danger">Exit</button>
+															<button type="submit" class="btn btn-danger">Exit</button>
 														</div>
 													</div>
 												
@@ -138,13 +139,7 @@
 													<div class="m-accordion__item-body collapse" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head" data-parent="#m_accordion_7">
 														<div class="m-accordion__item-content">
 															<p>
-																Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-																to make a type specimen book.
+														 		<?php echo $row['q_note'];?>
 															</p> 
 														</div>
 													</div>
