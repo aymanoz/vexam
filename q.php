@@ -17,7 +17,10 @@
 	if ($result->num_rows > 0) {
 	$row = $result->fetch_assoc();
 	}
+	if($row['q_img']){ $img="<br><img src='img/10q".$row['q_id'].".png'>"; }else{$img="";} 
+	if($row['q_log_img']){ $log_img="<br><img src='img/".$row['q_log_img']."'>"; }else{$log_img="";}
 	?> 
+	
 	<!-- end::Head --> 
 	<body> 
 			<!-- begin::Body -->    
@@ -39,7 +42,7 @@
 										<!--begin::Section-->
 										<div class="m-section"> 
 											<span class="m-section__sub">
-											 <?php echo $row['q_q'];?>
+											 <?php echo $row['q_q'];?><?php echo $img;?>
 											</span> 
 										</div> 
 										<!--end::Section--> 
@@ -118,7 +121,9 @@
 													<div class="m-accordion__item-body collapse" id="m_accordion_7_item_1_body" role="tabpanel" aria-labelledby="m_accordion_7_item_1_head" data-parent="#m_accordion_7">
 														<div class="m-accordion__item-content">
 															<p>
-														 		<?php echo $row['q_note'];?>
+														 		<?php echo $row['q_note'];?><br>
+																 <?php echo $log_img;?>
+																
 															</p> 
 														</div>
 													</div>
