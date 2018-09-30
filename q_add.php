@@ -6,8 +6,9 @@
 	<!-- begin::PHP Add  -->
     <?php 
     $Note = ""; 
-    // Create connection
+    // Create Database connection
     include "txt/db.php";
+    //Save post to var.
     if (!empty($_POST)) {  
         $Q1=$_POST['Q1'];
         $A1=$_POST['A1'];
@@ -17,11 +18,9 @@
         $A5=$_POST['A5'];
         $A6=$_POST['A6'];
         $A7=$_POST['A7'];
+        //check 
         $check_0 = isset($_POST['img'][0]) ? 1 : 0; 
-         
         $log_img = isset($_POST['log_img']) ? 1 : 0;
-
-         
         $check_0 = isset($_POST['ch'][0]) ? 1 : 0;
         $check_1 = isset($_POST['ch'][1]) ? 1 : 0;
         $check_2 = isset($_POST['ch'][2]) ? 1 : 0; 
@@ -29,27 +28,32 @@
         $check_4 = isset($_POST['ch'][4]) ? 1 : 0; 
         $check_5 = isset($_POST['ch'][5]) ? 1 : 0; 
         $check_6 = isset($_POST['ch'][6]) ? 1 : 0;   
-        $img = isset($_POST['img'][0]) ? 1 : 0;   
+        $img = isset($_POST['img'][0]) ? 1 : 0; 
+
         $no_Correct=$check_0+$check_1+$check_2+$check_3+$check_4+$check_5+$check_6 ;
         if($no_Correct>1){$q_type=2;}else{$q_type=1;}
         $note=$_POST['note'];   
         if (empty($_POST['Q1'])){exit(1);}
         if (empty($_POST['A1'])){exit(1);} 
-        if ($conn->query("INSERT INTO question (q_q,  q_book , q_note,q_type,q_img,q_log_img) VALUES 
-        ('$Q1', 'CISCO 200-125','$note','$q_type','$img','$log_img')") === TRUE) {echo "Add one q"; }
-        else{echo "problem";}    
+
         $resultx= $conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1") ;
         $rowx = $resultx->fetch_assoc();
         $MaxID= $rowx['q_id'];
         $NextID=$MaxID+1;
         echo $NextID;
-        $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A1', '$check_0')");
-        if (!empty($_POST['A2'])){$sql_u2=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A2', '$check_1')");}
-        if (!empty($_POST['A3'])){$sql_u3=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A3', '$check_2')");}
-        if (!empty($_POST['A4'])){$sql_u4=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A4', '$check_3')");}
-        if (!empty($_POST['A5'])){$sql_u5=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A5', '$check_4')");}
-        if (!empty($_POST['A6'])){$sql_u6=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A6', '$check_5')");}
-        if (!empty($_POST['A7'])){$sql_u7=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($MaxID, '$A7', '$check_6')");}
+
+        if ($conn->query("INSERT INTO question (q_id, q_q,  q_book , q_note,q_type,q_img,q_log_img) VALUES 
+        ('$NextID','$Q1', 'CISCO 200-125','$note','$q_type','$img','$log_img')") === TRUE) {echo "Add one q"; }
+        else{echo "problem";}    
+
+
+        $sql_a=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A1', '$check_0')");
+        if (!empty($_POST['A2'])){$sql_u2=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A2', '$check_1')");}
+        if (!empty($_POST['A3'])){$sql_u3=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A3', '$check_2')");}
+        if (!empty($_POST['A4'])){$sql_u4=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A4', '$check_3')");}
+        if (!empty($_POST['A5'])){$sql_u5=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A5', '$check_4')");}
+        if (!empty($_POST['A6'])){$sql_u6=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A6', '$check_5')");}
+        if (!empty($_POST['A7'])){$sql_u7=$conn ->query( "INSERT INTO answer (a_qid, a_a, a_isCorrect) VALUES  ($NextID, '$A7', '$check_6')");}
         // Add log record
         $sql_a=$conn ->query( "INSERT INTO log (log_book,log_type,log_data) VALUES  ('CISCO 200-125', 'Add', 'Add Qustion No. $MaxID')");
 
