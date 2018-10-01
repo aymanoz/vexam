@@ -9,6 +9,11 @@
     // Create Database connection
     include "txt/db.php";
     //Save post to var.
+    $resultx= $conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1") ;
+    $rowx = $resultx->fetch_assoc();
+    $MaxID= $rowx['q_id'];
+    $NextID=$MaxID+1;
+    echo "Add Q  ".$NextID;
     if (!empty($_POST)) {  
         $Q1=$_POST['Q1'];
         $A1=$_POST['A1'];
@@ -36,14 +41,13 @@
         if (empty($_POST['Q1'])){exit(1);}
         if (empty($_POST['A1'])){exit(1);} 
 
-        $resultx= $conn->query("SELECT q_id FROM question ORDER BY q_id DESC LIMIT 1") ;
-        $rowx = $resultx->fetch_assoc();
-        $MaxID= $rowx['q_id'];
-        $NextID=$MaxID+1;
-        echo $NextID;
+       
+         
 
-        if ($conn->query("INSERT INTO question (q_id, q_q,  q_book , q_note,q_type,q_img,q_log_img) VALUES 
-        ('$NextID','$Q1', 'CISCO 200-125','$note','$q_type','$img','$log_img')") === TRUE) {echo "Add one q"; }
+        if ($conn->query("INSERT INTO question 
+        (q_id, q_q,  q_book , q_note,q_type,q_img,q_log_img) VALUES 
+        ('$NextID','$Q1', 'CISCO 200-125','$note','$q_type','$img','$log_img')") === TRUE) 
+        {echo ""; }
         else{echo "problem";}    
 
 
